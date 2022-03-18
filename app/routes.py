@@ -28,4 +28,4 @@ def welcome():
 def welcome2():   
     payload = json.loads(request.data)
     print("user_temp =",payload["user_temp"])
-    return "user temp ovveride"
+    return "user temp overide"

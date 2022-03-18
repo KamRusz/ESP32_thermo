@@ -1,6 +1,6 @@
 from flask import render_template, request
 import datetime
-from app import app
+from app.main import app
 import json
 
 @app.route('/')

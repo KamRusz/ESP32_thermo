@@ -24,14 +24,14 @@
         <header class="navbar bg-dark">
           <section class="navbar-section">
             <a href="/index" class="navbar-brand mr-2 text-gray">Strona Główna</a>
-            <a href="..." class="btn btn-link text-gray">Docs</a>
-            <a href="..." class="btn btn-link text-gray">GitHu2b</a>
+            <a href="/login" class="btn btn-link text-gray">login</a>
+            <a href="/settemp" class="btn btn-link text-gray">set temp</a>
           </section>
           <section class="navbar-center">
-            <a href="/hello" class="btn btn-link">GitHub</a>
+
           </section>
           <section class="navbar-section">
-            <a href="..." class="btn btn-link text-gray">Logout</a>
+            <a href="/logout" class="btn btn-link text-gray">Logout</a>
           </section>
         </header>
          <div class="hero">
@@ -60,8 +60,16 @@
         </div>
         <div class="hero">
           <div class="hero-body">
-            <h1>Inteligentny termostat</h1>
-            <p>Strona do zarządzania termostatem połączonym z esp32</p>
+            <hr>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
           </div>
           </div>
       </div> 

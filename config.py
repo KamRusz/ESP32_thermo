@@ -3,7 +3,8 @@ import os
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    #SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://')
     API_KEY = os.environ.get('API_KEY')
     ADD_USER_KEY = os.environ.get('ADD_USER_KEY')
     TEMP_CHOICES = [

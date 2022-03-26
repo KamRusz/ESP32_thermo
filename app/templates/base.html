@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <title>Inteligentny Termostat</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+</head>
+<body>
+    <style>
+    body {  
+      background-image: url("{{ url_for('static', filename='bac.jpg') }}");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    </style>
+    
+  <div class="container">
+    <div class="columns col-gapless">
+      <div class="column col-2 hide-sm col-md-1"></div>
+      <div class="column col-8 col-sm-12 col-md-10">
+        <header class="navbar bg-dark">
+          <section class="navbar-section">
+            <a href="/settemp" class="navbar-brand mr-2 text-gray m-2">Ustaw temperaturę</a>
+          </section>
+          <section class="navbar-center">
+            {% if current_user.is_anonymous %}
+              <a href="/index" class="navbar-brand mr-2 text-gray">Witaj Gość</a>
+            {% else %}
+              <a href="/index" class="navbar-brand mr-2 text-gray">Witaj {{current_user.username}}</a>
+            {% endif %}
+          </section>
+          <section class="navbar-section">
+            {% if current_user.is_anonymous %}
+              <a href="{{ url_for('login') }}" class="navbar-brand mx-2 text-gray mx-2">Login</a>
+            {% else %}
+              <a href="{{ url_for('logout') }}" class="navbar-brand mr-2 text-gray mx-2">Logout</a>
+            {% endif %}
+          </section>
+          </header>
+        </div>
+        <div class="column col-2 hide-sm col-md-1"></div>
+        </div>
+        </div>
+          {% block content %}{% endblock %}   
+</body>
+</html>

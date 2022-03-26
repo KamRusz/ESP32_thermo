@@ -1,67 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-    <title>Inteligentny Termostat</title>
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <meta charset="UTF-8">
-    <title>FlaskApp</title>
-</head>
-<body>
-  <style>
-    body {
-      background-image: url('https://wallpaperaccess.com/full/2920297.jpg');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
-    </style>
-  <div class="container">
-    <div class="columns col-gapless">
-      <div class="column col-2"></div>
-      <div class="column col-8">
-        <header class="navbar bg-dark">
-          <section class="navbar-section">
-            <a href="/index" class="navbar-brand mr-2 text-gray">Strona Główna</a>
-            <a href="/login" class="btn btn-link text-gray">login</a>
-            <a href="/settemp" class="btn btn-link text-gray">set temp</a>
-          </section>
-          <section class="navbar-center">
+{% extends "base.html" %}
 
-          </section>
-          <section class="navbar-section">
-            <a href="/logout" class="btn btn-link text-gray">Logout</a>
-          </section>
-        </header>
-         <div class="hero">
+{% block content %}
+<div class="container">
+  <div class="columns col-gapless">
+    <div class="column col-2 hide-sm col-md-1"></div>
+    <div class="column col-8 col-sm-12 col-md-10">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+          {% for message in messages %}
+          {% if message=="You don't have permission to change this setting" %}
+          <div class="toast toast-warning">
+            {{ message }}
+          </div>
+          {% else %}
+          <div class="toast toast-success">
+            {{ message }}
+          </div>
+          {% endif %}
+          {% endfor %}                  
+      </ul>
+      {% endif %}
+      {% endwith %}
+  </div>
+  <div class="column col-2 hide-sm col-md-1"></div>
+</div>
+</div> 
+<div class="container">
+  <div class="columns col-gapless">
+    <div class="column col-3 hide-sm col-md-1"></div>
+    <div class="column col-6 col-sm-12 col-md-10">
+         <div class="hero hero-sm">
         <div class="hero-body">
-          <h1>Set temp</h1>
-          <form action="" method="post" novalidate>
+          <h1>Ustaw temperaturę</h1>
+          <div class="form-group">
+            <form action="" method="post" novalidate>
               {{ form.hidden_tag() }}
-              <p>{{ form.temp() }}</p>
-              <p>{{ form.submit() }}</p>
-          </form>          
+              <p>{{ form.temp() }}  {{ form.submit() }}</p>
+            </form> 
+          
+          </div>             
+                     
         </div>
         </div>
-        <div class="hero">
+        <div class="hero hero-sm">
           <div class="hero-body">
-            <hr>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                    <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
+            <h1>Rejestr zmian temperatury</h1>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><h4> Kiedy </h4></th>
+                  <th><h4>Ile</h4></th>
+                  <th><h4>Kto</h4></th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in changes %}
+                <tr>
+                  <td>{{ item[0] }}</td>
+                  <td>{{ item[1] }}</td>
+                  <td>{{ item[2] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            
+
           </div>
           </div>
       </div> 
-      <div class="column col-2"></div> 
-    </div>
+      
+
+      <div class="column col-3 hide-sm col-md-1"></div>
   </div> 
-  <div class="container bg-dark text-gray"> <br> </div>
-  </body>
-  </html>
+  {% endblock %}

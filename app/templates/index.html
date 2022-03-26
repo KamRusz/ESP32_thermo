@@ -1,64 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-    <title>Inteligentny Termostat</title>
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <meta charset="UTF-8">
-    <title>FlaskApp</title>
-</head>
-<body>
-  <style>
- 
-    body {  
-      background-image: url('https://wallpaperaccess.com/full/2920297.jpg');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-    </style>
-  <div class="container">
-    <div class="columns col-gapless">
-      <div class="column col-2"></div>
-      <div class="column col-8">
-        <header class="navbar bg-dark">
-          <section class="navbar-section">
-            <a href="/index" class="navbar-brand mr-2 text-gray">Strona Główna</a>
-            <a href="/login" class="btn btn-link text-gray">login</a>
-            <a href="/settemp" class="btn btn-link text-gray">set temp</a>
-          </section>
-          <section class="navbar-center">
+{% extends "base.html" %}
 
-          </section>
-          <section class="navbar-section">
-            <a href="/logout" class="btn btn-link text-gray">Logout</a>
-          </section>
-        </header>
-        <div class="hero">
-        <div class="hero-body">
-          <h1>Inteligentny termostat</h1>
-          <p>Strona do zarządzania termostatem połączonym z esp32</p>
-        </div>
-        </div>
-        <div class="hero">
-          <div class="hero-body">
-            <hr>
+{% block content %}
+<div class="container">
+  <div class="columns col-gapless">
+    <div class="column col-2 hide-sm col-md-1"></div>
+    <div class="column col-8 col-sm-12 col-md-10">
+
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                 <ul>
                     {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <div class="toast toast-success">
+                      {{ message }}
+                    </div>
                     {% endfor %}
                 </ul>
                 {% endif %}
                 {% endwith %}
+       
+        <div class="hero hero-sm">
+        <div class="hero-body">
+          <h1>Inteligentny termostat</h1>
+          <p>Strona do zarządzania termostatem połączonym z esp32</p>
+          <div class="container">
+            <div class="columns">
+              <div class="column col-1 col-sm-2 col-md-2"><image src="{{ url_for('static', filename='zadana.png') }}" alt="temp_zadana" width="60" height="60"></image></div>
+              <div class="column col-9 col-xs-10 col-md-9 m-2">
+                  <h3>temperatura zadana = {{ target_temp }} </h3>
+            </div>
+            </div>
+            <div class="divider"></div>
+          </div>
+          <div class="container">
+            <div class="columns">
+              <div class="column col-1 col-sm-2 col-md-2"><image src="{{ url_for('static', filename='temp.png') }}" alt="temp" width="60" height="60"></image></div>
+              <div class="column col-9 col-xs-10 col-md-9 m-2">
+                  <h3>temperatura obecna = {{ current_temphumi.temp }}°C</h3>
+            </div>
+            </div>
+            <div class="divider"></div>
+          </div>
+          <div class="container">
+            <div class="columns">
+              <div class="column col-1 col-sm-2 col-md-2"><image src="{{ url_for('static', filename='humi.png') }}" alt="humi" width="60" height="60"></image></div>
+              <div class="column col-9 col-xs-10 col-md-9 m-2">
+                  <h3>wilgotnosc obecna = {{ current_temphumi.humi }}% </h3>
+            </div>
+            </div>
+                  
+        </div>
+        </div>
+        </div>
+    <div class="column col-2 hide-sm col-md-1"></div>
+  </div>
+</div>
+</div>
+<div class="container">
+  <div class="columns col-gapless">
+    <div class="column col-2 hide-sm col-md-1"></div>
+    <div class="column col-8 col-sm-12 col-md-10">
+        <div class="hero hero-sm">
+          <div class="hero-body">
+            
+              {% if current_user.is_authenticated %}
+                <h3> Wykres średniej temperatury i wilgotności</h3>
+                <canvas id="myChart", width="900", height="300"></canvas>
+              {% endif %}
+              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+              <script>
+              var ctx = document.getElementById('myChart').getContext('2d');
+              var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+              
+                // The data for our dataset
+                data: {
+                  datasets: [{
+                    label: 'Średnia temperatura',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: {{ values1 | safe }}
+                  }, {
+                    label: 'Średnia wilgotność',
+                    borderColor: 'rgb(50, 99, 132)',
+                    fill: false,
+                    lineTension: 0.1,
+                    data: {{ values2 | safe }}
+                  }],
+                  labels:  {{ labels | safe }},
+                },
+              
+                // Configuration options go here
+                options: {
+                    responsive: true,
+                    scales: {
+                    y: {
+                      type: 'linear',
+                      display: true,
+                      position: 'right',
+                      },
+                    y1: {
+                      type: 'linear',
+                      display: true,
+                      position: 'right',
+                      }
+                          }
+                      }
+              });
+              </script>
+
+
+
+
           </div>
           </div>
       </div> 
-      <div class="column col-2"></div> 
+      <div class="column col-2 hide-sm col-md-1"></div>  
     </div>
   </div> 
-  <div class="container bg-dark text-gray"> <br> </div>
-  </body>
-  </html>
+  {% endblock %}

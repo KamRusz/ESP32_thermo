@@ -1,3 +1,4 @@
+from email.policy import default
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired
@@ -12,5 +13,5 @@ class LoginForm(FlaskForm):
 
 
 class TempForm(FlaskForm):
-    temp = SelectField(u'TEMP', choices=Config.TEMP_CHOICES)
+    temp = SelectField(u'TEMP', choices=Config.TEMP_CHOICES, default="20")
     submit = SubmitField('Set temp')

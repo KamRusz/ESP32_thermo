@@ -21,20 +21,20 @@ def load_user(id):
 
 
 class Temphumi(db.Model):
-    timestamp = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, primary_key=True, default=datetime.now)
     temp = db.Column(db.Float)
     humi = db.Column(db.Float)
-    day = db.Column(db.Date, default=date.today)
+    day = db.Column(db.String(64), default=datetime.today().strftime("%Y-%m-%d"))
 
 
 class Avg_temphumi(db.Model):
-    day = db.Column(db.Date, primary_key=True, default=date.today)
+    day = db.Column(db.String(64), primary_key=True, default=datetime.today().strftime("%Y-%m-%d"))
     avg_temp = db.Column(db.Float)
     avg_humi = db.Column(db.Float)
 
 
 class Targettemp(db.Model):
-    timestamp = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, primary_key=True, default=datetime.now)
     target_temp = db.Column(db.Integer)
     by_who = db.Column(db.String(64))
 
@@ -42,5 +42,5 @@ class Targettemp(db.Model):
 class FailedLogin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     not_registered_user = db.Column(db.String(64))
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
 

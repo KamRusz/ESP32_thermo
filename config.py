@@ -7,18 +7,34 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://')
     API_KEY = os.environ.get('API_KEY')
     ADD_USER_KEY = os.environ.get('ADD_USER_KEY')
+    ADD_USER_ALLOWED = os.environ.get('ADD_USER_ALLOWED')
     TEMP_CHOICES = [
-    ('14', 'Min'),
-    ('15', '15st'),
-    ('16', '16st'),
-    ('17', '17st'),
-    ('18', '18st'),
-    ('19', '19st'),
-    ('20', '20st'),
-    ('21', '21st'),
-    ('22', '22st'),
-    ('23', '23st'),
-    ('24', '24st'),
-    ('25', '25st'),
+    ('14', 'Off'),
+    ('15', '15°C'),
+    ('16', '16°C'),
+    ('17', '17°C'),
+    ('18', '18°C'),
+    ('19', '19°C'),
+    ('20', '20°C'),
+    ('21', '21°C'),
+    ('22', '22°C'),
+    ('23', '23°C'),
+    ('24', '24°C'),
+    ('25', '25°C'),
     ('26', 'Max'),
     ]
+    TEMP_TRANS = {
+        14:"Off",
+        15:"15°C",
+        16:"16°C",
+        17:"17°C",
+        18:"18°C",
+        19:"19°C",
+        20:"20°C",
+        21:"21°C",
+        22:"22°C",
+        23:"23°C",
+        24:"24°C",
+        25:"25°C",
+        26:"Max"
+    }

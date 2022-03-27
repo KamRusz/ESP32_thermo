@@ -40,8 +40,8 @@ def index():
 def welcome():   
     payload = json.loads(request.data)
     if payload["api_key"] == Config.API_KEY:
-        rtemp = int(payload["room_temp"])
-        rhumi = int(payload["room_humi"])
+        rtemp = float(payload["room_temp"])
+        rhumi = float(payload["room_humi"])
         print("room_temp =",payload["room_temp"])
         temphumi["temp"] = rtemp
         temphumi["humi"] = rhumi

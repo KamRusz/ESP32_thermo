@@ -24,7 +24,7 @@ class Temphumi(db.Model):
     timestamp = db.Column(db.DateTime, primary_key=True, default=datetime.now)
     temp = db.Column(db.Float)
     humi = db.Column(db.Float)
-    day = db.Column(db.String(64), default=datetime.today().strftime("%Y-%m-%d"))
+    day = db.Column(db.String(64), default=datetime.now().strftime("%Y-%m-%d"))
 
 
 class Avg_temphumi(db.Model):

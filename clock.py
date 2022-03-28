@@ -16,8 +16,7 @@ def Average(lst):
     return x
 
 
-#@sched.scheduled_job("cron", hour=21)
-@sched.scheduled_job('interval', minutes=3)
+@sched.scheduled_job("cron", hour=23)
 def timed_job():
     # data = db.session.query(db.func.avg(Temphumi)).filter(Temphumi.day==date.today()).first()
     data = db.session.query(Temphumi).filter(Temphumi.day == datetime.now().strftime("%Y-%m-%d")).all()

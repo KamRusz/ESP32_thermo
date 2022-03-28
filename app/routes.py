@@ -1,5 +1,5 @@
 import json
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
@@ -180,35 +180,16 @@ def home():
     )
 
 
-def Average(lst):
-    try:
-        x = round(sum(lst) / len(lst), 2)
-    except ZeroDivisionError:
-        return 0
-    return x
 
 
+'''
 @app.route("/test")
 def test():
     #data = db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").first()
     db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").delete()
+    db.session.commit()
+    #a = datetime.now() - timedelta(days = 2)
+    #print(a.strftime("%Y-%m-%d"))
     #print(data)
-
     return "ok"
-    # data = db.session.query(db.func.avg(Temphumi)).filter(Temphumi.day==date.today()).first()
-    avgt = []
-    avgh = []
-    for x in data:
-        avgt.append(x.temp)
-        avgh.append(x.humi)
-    u = Avg_temphumi(avg_temp=Average(avgt), avg_humi=Average(avgh))
-    if (
-        db.session.query(Avg_temphumi)
-        .filter(Avg_temphumi.day == datetime.today().strftime("%Y-%m-%d"))
-        .all()
-    ):
-        pass
-    else:
-        db.session.add(u)
-        db.session.commit()
-    return "ok"
+'''

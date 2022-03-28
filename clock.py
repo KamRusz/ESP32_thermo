@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 
@@ -31,6 +31,9 @@ def timed_job():
     else:
         db.session.add(u)
         db.session.commit()
-
+    #deleting old temp data - 2 days before today
+    expendable = datetime.now() - timedelta(days = 2)
+    db.session.query(Temphumi).filter(Temphumi.day == expendable.strftime("%Y-%m-%d")).delete()
+    db.session.commit()
 
 sched.start()

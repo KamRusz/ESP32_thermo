@@ -10,7 +10,7 @@ from app.main import app, db
 from app.models import Avg_temphumi, FailedLogin, Targettemp, Temphumi, User
 from config import Config
 
-temphumi = {"temp": 25, "humi": 45}
+temphumi = {"temp": float, "humi": float}
 
 
 @app.route("/")
@@ -185,8 +185,8 @@ def home():
 '''
 @app.route("/test")
 def test():
-    #data = db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").first()
-    db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").delete()
+    #data = db.session.query(Temphumi).filter(Temphumi.day < "2022-03-27").first()
+    db.session.query(Temphumi).filter(Temphumi.day < "2022-03-27").delete()
     db.session.commit()
     #a = datetime.now() - timedelta(days = 2)
     #print(a.strftime("%Y-%m-%d"))

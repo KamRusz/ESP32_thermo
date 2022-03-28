@@ -11,6 +11,7 @@ class Config(object):
     API_KEY = os.environ.get("API_KEY")
     ADD_USER_KEY = os.environ.get("ADD_USER_KEY")
     ADD_USER_ALLOWED = os.environ.get("ADD_USER_ALLOWED")
+    KEEP_LOG_DAYS = os.environ.get("KEEP_LOG_DAYS")
     TEMP_CHOICES = [
         ("14", "Off"),
         ("15", "15°C"),

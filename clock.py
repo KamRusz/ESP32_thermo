@@ -4,6 +4,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from app.main import app, db
 from app.models import Avg_temphumi, Temphumi
+from config import Config
 
 sched = BlockingScheduler()
 
@@ -31,9 +32,9 @@ def timed_job():
     else:
         db.session.add(u)
         db.session.commit()
-    #deleting old temp data - 2 days before today
-    expendable = datetime.now() - timedelta(days = 2)
-    db.session.query(Temphumi).filter(Temphumi.day == expendable.strftime("%Y-%m-%d")).delete()
+    #deleting old temp data - older then X days
+    expendable = datetime.now() - timedelta(days = Config.KEEP_LOG_DAYS)
+    db.session.query(Temphumi).filter(Temphumi.day < expendable.strftime("%Y-%m-%d")).delete()
     db.session.commit()
 
 sched.start()

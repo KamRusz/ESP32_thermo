@@ -25,7 +25,7 @@ def load_user(id):
 
 
 def date_time():
-    return str(datetime.now().strftime("%Y-%m-%d"))
+    return datetime.now().strftime("%Y-%m-%d")
 
 
 class Temphumi(db.Model):

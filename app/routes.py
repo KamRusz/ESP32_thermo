@@ -110,7 +110,7 @@ def settemp():
     register = (
         db.session.query(Targettemp)
         .order_by(Targettemp.timestamp.desc())
-        .limit(8)
+        .limit(10)
         .all()
     )
     changes = []
@@ -122,16 +122,13 @@ def settemp():
                 reg.by_who,
             )
         )
-    print(changes)
     form = TempForm()
-    print("user = ", current_user.username)
     if form.validate_on_submit():
         if not current_user.admin:
             flash("You don't have permission to change this setting")
             return redirect(url_for("settemp"))
         else:
             utemp = int(form.temp.data)
-            print(utemp)
             t = Targettemp(target_temp=utemp, by_who=current_user.username)
             db.session.add(t)
             db.session.commit()
@@ -193,7 +190,11 @@ def Average(lst):
 
 @app.route("/test")
 def test():
-    data = db.session.query(Temphumi).filter(Temphumi.day == date.today()).all()
+    #data = db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").first()
+    db.session.query(Temphumi).filter(Temphumi.day == "2022-03-27").delete()
+    #print(data)
+
+    return "ok"
     # data = db.session.query(db.func.avg(Temphumi)).filter(Temphumi.day==date.today()).first()
     avgt = []
     avgh = []

@@ -35,7 +35,7 @@ def timed_job():
         db.session.commit()
         print(datetime.now().strftime("%Y-%m-%d"), "row added")
     #deleting old temp data - older then X days
-    expendable = datetime.now() - timedelta(days = Config.KEEP_LOG_DAYS)
+    expendable = datetime.now() - timedelta(days = int(Config.KEEP_LOG_DAYS))
     db.session.query(Temphumi).filter(Temphumi.day < expendable.strftime("%Y-%m-%d")).delete()
     db.session.commit()
 

@@ -46,9 +46,16 @@
               <div class="column col-9 col-xs-10 col-md-9 m-2">
                   <h3>wilgotnosc obecna = {{ current_temphumi.humi }}% </h3>
             </div>
-            </div>
-                  
+            </div>     
         </div>
+        <div class="container">
+          <div class="columns">
+            <div class="column col-1 col-sm-2 col-md-2"></div>
+            <div class="column col-9 col-xs-10 col-md-9 m-2">
+              <p style="color:#9dacf0d5">Last update: {{ current_temphumi.timestamp.strftime("%Y-%m-%d - %H:%M:%S") }}</p>
+          </div>
+          </div>      
+      </div>
         </div>
         </div>
     <div class="column col-2 hide-sm col-md-1"></div>

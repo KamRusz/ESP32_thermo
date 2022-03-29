@@ -150,7 +150,7 @@ def logout():
 
 @app.route("/adduser", methods=["POST"])
 def adduser():
-    if Config.ADD_USER_ALLOWED:
+    if Config.ADD_USER_ALLOWED == 'open':
         data = json.loads(request.data)
         if data["add_user_key"] == Config.ADD_USER_KEY:
             username = data["username"]

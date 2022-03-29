@@ -17,7 +17,7 @@ def Average(lst):
     return x
 
 
-@sched.scheduled_job('interval', minutes=2)
+@sched.scheduled_job('cron', hour=23)
 def timed_job():
     # data = db.session.query(db.func.avg(Temphumi)).filter(Temphumi.day==date.today()).first()
     data = db.session.query(Temphumi).filter(Temphumi.day == datetime.now().strftime("%Y-%m-%d")).all()
@@ -33,7 +33,7 @@ def timed_job():
     else:
         db.session.add(u)
         db.session.commit()
-        print(datetime.now().strftime("%Y-%m-%d"), "row added")
+        print(datetime.now().strftime("%Y-%m-%d"), "Avg temperature + humidity row added")
     #deleting old temp data - older then X days
     expendable = datetime.now() - timedelta(days = int(Config.KEEP_LOG_DAYS))
     db.session.query(Temphumi).filter(Temphumi.day < expendable.strftime("%Y-%m-%d")).delete()

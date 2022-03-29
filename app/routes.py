@@ -52,10 +52,10 @@ def welcome():
     if payload["api_key"] == Config.API_KEY:
         rtemp = float(payload["room_temp"])
         rhumi = float(payload["room_humi"])
-        print("room_temp =", payload["room_temp"])
+        #print("room_temp =", payload["room_temp"])
         temphumi["temp"] = rtemp
         temphumi["humi"] = rhumi
-        print("room_humi =", payload["room_humi"])
+        #print("room_humi =", payload["room_humi"])
         # dodanie do db
         t = Temphumi(temp=rtemp, humi=rhumi)
         db.session.add(t)
@@ -63,7 +63,7 @@ def welcome():
         target_temp = (
             db.session.query(Targettemp).order_by(Targettemp.timestamp.desc()).first()
         )
-        print(target_temp.target_temp)
+        #print(target_temp.target_temp)
         return {"target_temp": target_temp.target_temp}
     return "zły klucz api"
 

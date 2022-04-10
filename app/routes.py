@@ -32,6 +32,7 @@ def index():
     data = (
         db.session.query(Avg_temphumi).order_by(Avg_temphumi.day.desc()).limit(10).all()
     )
+    data.reverse()
     labels = [obj.day for obj in data]
     values1 = [obj.avg_temp for obj in data]
     values2 = [obj.avg_humi for obj in data]
@@ -182,14 +183,18 @@ def home():
 
 
 
-'''
+
 @app.route("/test")
 def test():
+    temp = db.session.query(db.func.avg(Temphumi.temp),db.func.avg(Temphumi.humi)).filter(Temphumi.day==date.today()).first()
+    #humi = db.session.query(db.func.avg(Temphumi.humi)).filter(Temphumi.day==date.today()).first()
+    #data = db.func.avg(db.session.query((Temphumi)).filter(Temphumi.day==date.today()).first())
+    print(temp, humi)
     #data = db.session.query(Temphumi).filter(Temphumi.day < "2022-03-27").first()
-    db.session.query(Temphumi).filter(Temphumi.day < "2022-03-27").delete()
-    db.session.commit()
+    print("ma być 30.0 ; 40.0")
+    #db.session.query(Temphumi).filter(Temphumi.day < "2022-03-27").delete()
+    #db.session.commit()
     #a = datetime.now() - timedelta(days = 2)
     #print(a.strftime("%Y-%m-%d"))
     #print(data)
     return "ok"
-'''
